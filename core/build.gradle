@@ -1,0 +1,7 @@
+group 'com.robinyang'
+version '1.0-SNAPSHOT'
+
+
+dependencies {
+    provided "io.vertx:vertx-web:${vertxVersion}"
+}

@@ -1,0 +1,9 @@
+classes
+*.iml
+.gradle
+.idea
+out
+**/build
+*/target
+.vertx
+file-uploads
