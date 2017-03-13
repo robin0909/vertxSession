@@ -8,6 +8,7 @@ import io.vertx.ext.web.sstore.impl.RedisSessionStoreImpl;
  */
 public interface RedisSessionStore extends SessionStore {
 
+
     /**
      * Default of how often, in ms, to check for expired sessions
      */
