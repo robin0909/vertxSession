@@ -32,6 +32,7 @@ public class RedisSessionStoreImpl implements RedisSessionStore {
     private final Vertx vertx;
     private final String sessionMapName;
     private final long retryTimeout;
+    private final LocalMap<String, Session> localMap;
 
     private String host = "localhost";
     private int port = 6379;
@@ -47,6 +48,7 @@ public class RedisSessionStoreImpl implements RedisSessionStore {
         this.sessionMapName = defaultSessionMapName;
         this.retryTimeout = retryTimeout;
 
+        localMap = vertx.sharedData().getLocalMap(sessionMapName);
         localSessionIds = new Vector<>();
         redisManager();
     }
@@ -66,9 +68,13 @@ public class RedisSessionStoreImpl implements RedisSessionStore {
         redisClient.getBinary(id, res->{
             if(res.succeeded()) {
                 Buffer buffer = res.result();
-                SessionImpl session = new SessionImpl();
-                session.readFromBuffer(0, buffer);
-                resultHandler.handle(Future.succeededFuture(session));
+                if(buffer != null) {
+                    SessionImpl session = new SessionImpl();
+                    session.readFromBuffer(0, buffer);
+                    resultHandler.handle(Future.succeededFuture(session));
+                } else {
+                    resultHandler.handle(Future.succeededFuture(localMap.get(id)));
+                }
             } else {
                 resultHandler.handle(Future.failedFuture(res.cause()));
             }
@@ -90,12 +96,17 @@ public class RedisSessionStoreImpl implements RedisSessionStore {
 
     @Override
     public void put(Session session, Handler<AsyncResult<Boolean>> resultHandler) {
+        //put 之前判断下是否存在，如果存在的话，就更新数据，但不更新时间
+//        redisClient.exists(session.id(), res1->{
+//            res1.succeeded()
+//        });
+
         Buffer buffer = Buffer.buffer();
         SessionImpl sessionImpl = (SessionImpl)session;
         //讲session序列化到 buffer里
         sessionImpl.writeToBuffer(buffer);
 
-        SetOptions setOptions = new SetOptions().setEX(session.timeout());
+        SetOptions setOptions = new SetOptions().setPX(session.timeout());
         redisClient.setBinaryWithOptions(session.id(), buffer, setOptions, res->{
             if (res.succeeded()) {
                 logger.debug("set key: {} ", session.data());

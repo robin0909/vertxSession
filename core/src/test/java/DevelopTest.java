@@ -85,7 +85,7 @@ public class DevelopTest {
 
         RedisClient redisClient = RedisClient.create(vertx, redisOptions);
 
-        redisClient.setBinaryWithOptions("test01", Buffer.buffer().appendBytes("robini".getBytes()), new SetOptions().setEX(60*30), res->{
+        redisClient.setBinaryWithOptions("test01", Buffer.buffer().appendBytes("robini".getBytes()), new SetOptions().setEX(100), res->{
             if(res.succeeded()) {
                 System.out.println("success");
                 latch.countDown();
@@ -168,7 +168,7 @@ public class DevelopTest {
 
         RedisClient redisClient = RedisClient.create(vertx, redisOptions);
 
-        redisClient.getBinary("240c999f-fe3e-4aed-87dc-440ee9155231", res->{
+        redisClient.getBinary("7b266564-01f4-409e-85cd-02fdc423c763", res->{
             if (res.succeeded()) {
                 Buffer buffer = res.result();
 
@@ -181,6 +181,28 @@ public class DevelopTest {
 
                 latch.countDown();
             }
+        });
+
+        latch.await();
+    }
+
+    @Test
+    public void test9() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Vertx vertx = Vertx.vertx();
+        RedisOptions redisOptions = new RedisOptions();
+        redisOptions.setAddress("56.12.15.44").setPort(6379);
+
+        RedisClient redisClient = RedisClient.create(vertx, redisOptions);
+
+        redisClient.exists("45c99711-a6c0-42db-8126-d567a60d18e0", res->{
+            if (res.succeeded() && res.result()!=0) {
+                System.out.println("存在 : "+res.result());
+            } else {
+                System.out.println("不存在");
+            }
+            latch.countDown();
         });
 
         latch.await();
