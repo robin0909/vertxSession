@@ -3,12 +3,13 @@ version '1.0-SNAPSHOT'
 
 
 dependencies {
+
     provided "io.vertx:vertx-web:${vertxVersion}"
     compile "io.vertx:vertx-redis-client:${vertxVersion}"
 
     /*log4j2所需依赖*/
-    compile "org.apache.logging.log4j:log4j-api:${log4j2Version}"
-    compile "org.apache.logging.log4j:log4j-core:${log4j2Version}"
-    compile "org.apache.logging.log4j:log4j-jcl:${log4j2Version}"
-    compile "org.apache.logging.log4j:log4j-slf4j-impl:${slf4jVersion}"
+    provided "org.apache.logging.log4j:log4j-api:${log4j2Version}"
+    provided "org.apache.logging.log4j:log4j-core:${log4j2Version}"
+    provided "org.apache.logging.log4j:log4j-jcl:${log4j2Version}"
+    provided "org.apache.logging.log4j:log4j-slf4j-impl:${slf4jVersion}"
 }

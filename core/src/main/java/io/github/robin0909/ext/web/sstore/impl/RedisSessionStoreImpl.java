@@ -1,4 +1,4 @@
-package com.robin.ext.web.sstore.impl;
+package io.github.robin0909.ext.web.sstore.impl;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
@@ -8,7 +8,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.shareddata.LocalMap;
 import io.vertx.ext.auth.PRNG;
 import io.vertx.ext.web.Session;
-import com.robin.ext.web.sstore.RedisSessionStore;
+import io.github.robin0909.ext.web.sstore.RedisSessionStore;
 import io.vertx.ext.web.sstore.impl.SessionImpl;
 import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;

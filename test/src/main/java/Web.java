@@ -7,7 +7,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CookieHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
-import com.robin.ext.web.sstore.RedisSessionStore;
+import io.github.robin0909.ext.web.sstore.RedisSessionStore;
 
 /**
  * Created by robin on 2017/3/15.

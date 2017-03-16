@@ -1,6 +1,6 @@
-package com.robin.ext.web.sstore;
+package io.github.robin0909.ext.web.sstore;
 
-import com.robin.ext.web.sstore.impl.RedisSessionStoreImpl;
+import io.github.robin0909.ext.web.sstore.impl.RedisSessionStoreImpl;
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.sstore.SessionStore;
 

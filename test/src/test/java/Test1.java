@@ -33,4 +33,17 @@ public class Test1 {
 
         latch.await();
     }
+
+    @Test
+    public void test02() {
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Vertx vertx = Vertx.vertx();
+        RedisOptions redisOptions = new RedisOptions();
+        redisOptions.setHost("123.207.151.74").setPort(6379);
+
+
+        RedisClient redisClient = RedisClient.create(vertx, redisOptions);
+
+    }
 }

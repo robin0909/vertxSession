@@ -2,9 +2,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.PRNG;
-import io.vertx.ext.web.Session;
 import io.vertx.ext.web.sstore.impl.SessionImpl;
-import io.vertx.ext.web.utils.SerializeUtil;
 import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
 import io.vertx.redis.op.SetOptions;
@@ -40,39 +38,6 @@ public class DevelopTest {
 
     }
 
-    @Test
-    public void test2() {
-        HashMap<String, Object> map = new HashMap<>();
-
-        map.put("key", new User("sss", 47));
-
-        byte[] serialize = SerializeUtil.serialize(map);
-
-        HashMap<String, Object> unserizlize = (HashMap<String, Object>) SerializeUtil.unserizlize(serialize);
-
-        System.out.println("================");
-        User u = (User) unserizlize.get("key");
-        System.out.println(u.getKey());
-        System.out.println(u.getName());
-
-    }
-
-    @Test
-    public void test3() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("key", new User("sss", 47));
-
-        byte[] serialize = SerializeUtil.serialize(map);
-
-        Buffer buffer = Buffer.buffer().appendLong(100L).appendBytes(serialize);
-
-        long aLong = buffer.getLong(0);
-        System.out.println(aLong);
-
-        byte[] bytes = buffer.getBytes(Long.BYTES, buffer.length());
-        HashMap<String, Object> map1 = (HashMap<String, Object>) SerializeUtil.unserizlize(bytes);
-
-    }
 
     @Test
     public void test4() throws InterruptedException {
