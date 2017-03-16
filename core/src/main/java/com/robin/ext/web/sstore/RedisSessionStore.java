@@ -1,8 +1,8 @@
-package io.vertx.ext.web.sstore;
+package com.robin.ext.web.sstore;
 
+import com.robin.ext.web.sstore.impl.RedisSessionStoreImpl;
 import io.vertx.core.Vertx;
-import io.vertx.ext.web.sstore.impl.LocalSessionStoreImpl;
-import io.vertx.ext.web.sstore.impl.RedisSessionStoreImpl;
+import io.vertx.ext.web.sstore.SessionStore;
 
 /**
  * Created by robinyang on 2017/3/13.
@@ -51,4 +51,6 @@ public interface RedisSessionStore extends SessionStore {
     RedisSessionStore host(String host);
 
     RedisSessionStore port(int port);
+
+    RedisSessionStore auth(String pwd);
 }

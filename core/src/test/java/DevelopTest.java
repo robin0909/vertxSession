@@ -1,6 +1,7 @@
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.auth.PRNG;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.sstore.impl.SessionImpl;
 import io.vertx.ext.web.utils.SerializeUtil;
@@ -140,7 +141,7 @@ public class DevelopTest {
 
         RedisClient redisClient = RedisClient.create(vertx, redisOptions);
 
-        SessionImpl session = new SessionImpl(1800L);
+        SessionImpl session = new SessionImpl(new PRNG(vertx));
         session.put("username", new User("robin", 47));
 
         Buffer buffer = Buffer.buffer();
@@ -172,7 +173,7 @@ public class DevelopTest {
             if (res.succeeded()) {
                 Buffer buffer = res.result();
 
-                SessionImpl session = new SessionImpl();
+                SessionImpl session = new SessionImpl(new PRNG(vertx));
                 session.readFromBuffer(0, buffer);
 
                 User username = session.get("username");
@@ -192,7 +193,7 @@ public class DevelopTest {
 
         Vertx vertx = Vertx.vertx();
         RedisOptions redisOptions = new RedisOptions();
-        redisOptions.setAddress("56.12.15.44").setPort(6379);
+        redisOptions.setHost("123.207.151.77").setPort(6379);
 
         RedisClient redisClient = RedisClient.create(vertx, redisOptions);
 
